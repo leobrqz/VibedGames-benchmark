@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Security Audit
+        run: npm audit --audit-level=high
+
+      - name: Lint
+        run: npm run lint
+
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      games: ${{ steps.detect.outputs.games }}
+      any-changed: ${{ steps.detect.outputs.any-changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed games
+        id: detect
+        run: |
+          # For PRs, compare against base branch
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          else
+            # For push, compare with previous commit
+            if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+              # First push or new branch - build all games
+              BASE_SHA=""
+              HEAD_SHA="${{ github.sha }}"
+            else
+              BASE_SHA="${{ github.event.before }}"
+              HEAD_SHA="${{ github.sha }}"
+            fi
+          fi
+
+          # Find all game directories with vite.config.js
+          all_games=$(find . -maxdepth 2 -name "vite.config.js" -type f | sed 's|^\./||' | cut -d/ -f1 | sort -u)
+
+          if [ -z "$BASE_SHA" ]; then
+            # Build all games if we can't compare
+            changed_games_list="$all_games"
+          else
+            # Detect which games have changes
+            changed_games_list=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep -E '^[^/]+/' | cut -d/ -f1 | sort -u | while read dir; do
+              echo "$all_games" | grep -x "$dir" || true
+            done | sort -u)
+            
+            # Also check for package.json, package-lock.json changes (rebuild all)
+            if git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep -qE '^(package\.json|package-lock\.json)$'; then
+              changed_games_list="$all_games"
+            fi
+          fi
+
+          # Convert to JSON array
+          if [ -z "$changed_games_list" ]; then
+            games_json="[]"
+            any_changed="false"
+          else
+            games_json=$(echo "$changed_games_list" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+            any_changed="true"
+          fi
+
+          echo "games=$games_json" >> $GITHUB_OUTPUT
+          echo "any-changed=$any_changed" >> $GITHUB_OUTPUT
+          echo "Changed games: $games_json"
+
+  build:
+    needs: [lint, detect-changes]
+    if: needs.detect-changes.outputs.any-changed == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        game: ${{ fromJson(needs.detect-changes.outputs.games) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build ${{ matrix.game }}
+        run: npm run build:${{ matrix.game }}

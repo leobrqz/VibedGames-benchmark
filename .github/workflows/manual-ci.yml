@@ -1,0 +1,81 @@
+name: Manual CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Security Audit
+        run: npm audit --audit-level=high
+
+      - name: Lint
+        run: npm run lint
+
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      games: ${{ steps.detect.outputs.games }}
+      any-changed: ${{ steps.detect.outputs.any-changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed games
+        id: detect
+        run: |
+          # For manual runs, build all games
+          all_games=$(find . -maxdepth 2 -name "vite.config.js" -type f | sed 's|^\./||' | cut -d/ -f1 | sort -u)
+
+          if [ -z "$all_games" ]; then
+            games_json="[]"
+            any_changed="false"
+          else
+            games_json=$(echo "$all_games" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+            any_changed="true"
+          fi
+
+          echo "games=$games_json" >> $GITHUB_OUTPUT
+          echo "any-changed=$any_changed" >> $GITHUB_OUTPUT
+          echo "Building all games: $games_json"
+
+  build:
+    needs: [lint, detect-changes]
+    if: needs.detect-changes.outputs.any-changed == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        game: ${{ fromJson(needs.detect-changes.outputs.games) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build ${{ matrix.game }}
+        run: npm run build:${{ matrix.game }}

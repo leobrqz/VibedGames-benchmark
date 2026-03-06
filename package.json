@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint .",
+    "build": "bash scripts/build-all.sh",
+    "build:all": "bash scripts/build-all.sh",
     "dev:voxel-rpg": "vite voxel-rpg",
     "build:voxel-rpg": "vite build voxel-rpg",
     "preview:voxel-rpg": "vite preview voxel-rpg"
@@ -12,6 +15,8 @@
     "three": "^0.180.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.2",
     "vite": "^7.1.5"
   }
 }
