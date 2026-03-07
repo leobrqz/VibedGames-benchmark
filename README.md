@@ -9,11 +9,25 @@
 
 Again, **this is a satire**.
 
+See [Contributing](#Contributing)
+
 ## Tech Stack
 
 - **Three.js** - 3D graphics
 - **Vite** - Build tool and dev server
 - **Vanilla JavaScript or TypeScript** - No frameworks
+
+## About
+
+This repository contains a collection of web games that are entirely "vibe coded" - meaning they're fully built by prompting AI coding assistants, no human written code.
+
+Each game folder contains a `prompt.md` file with the prompts used to generate the game.
+
+The purpose is to:
+- Experiment with AI-assisted game development
+- See what different AI models can build when given creative freedom
+- Definitely not create an actual game, please don't.
+
 
 ## Preview
 
@@ -35,6 +49,14 @@ Again, **this is a satire**.
 </div>
 </div>
 
+## Games
+
+Each game is in its own folder with independent configuration:
+
+| Game | Description | Model(s) | MCPs | Skills | Credit |
+|------|-------------|-------|------|--------|--------|
+| `voxel-rpg` | A voxel-based RPG with combat, inventory, and questing | GPT 5.4 | _TBD_ | _TBD_ | [leobrqz](https://github.com/leobrqz) |
+
 ## Contributing
 
 See the [Contributing Guidelines](CONTRIBUTING.md) for details on how to contribute to this project.
@@ -45,24 +67,7 @@ New games must include a `prompt.md` file detailing the initial prompt used to g
 
 **Contributions must include a `prompt_history.md`** showing the iterative process of refining the prompts to achieve the final result.
 
-## About
 
-This repository contains a collection of web games that are entirely "vibe coded" - meaning they're fully built by prompting AI coding assistants, no human written code.
-
-Each game folder contains a `prompt.md` file with the prompts used to generate the game.
-
-The purpose is to:
-- Experiment with AI-assisted game development
-- See what different AI models can build when given creative freedom
-- Definitely not create an actual game, please don't.
-
-## Games
-
-Each game is in its own folder with independent configuration:
-
-| Game | Description | Model(s) | MCPs | Skills | Credit |
-|------|-------------|-------|------|--------|--------|
-| `voxel-rpg` | A voxel-based RPG with combat, inventory, and questing | GPT 5.4 | _TBD_ | _TBD_ | [leobrqz](https://github.com/leobrqz) |
 
 ## Setup
 
