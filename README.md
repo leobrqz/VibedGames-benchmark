@@ -15,6 +15,26 @@ Again, **this is a satire**.
 - **Vite** - Build tool and dev server
 - **Vanilla JavaScript or TypeScript** - No frameworks
 
+## Preview
+
+<div align="center">
+  <details open>
+    <summary><b>voxel-rpg</b></summary>
+    <br>
+    <table>
+      <tr>
+        <td colspan="3" align="center"><img src="./voxel-rpg/preview/preview_01.png" width="600" alt="gameplay"></td>
+      </tr>
+      <tr>
+        <td><img src="./voxel-rpg/preview/preview_02.png" width="280" alt="screenshot 1"></td>
+        <td><img src="./voxel-rpg/preview/preview_03.png" width="280" alt="screenshot 2"></td>
+        <td><img src="./voxel-rpg/preview/preview_04.png" width="280" alt="screenshot 3"></td>
+      </tr>
+    </table>
+  </details>
+</div>
+</div>
+
 ## Contributing
 
 See the [Contributing Guidelines](CONTRIBUTING.md) for details on how to contribute to this project.
@@ -40,8 +60,9 @@ The purpose is to:
 
 Each game is in its own folder with independent configuration:
 
-- **voxel-rpg** - A voxel-based RPG with combat, inventory, and questing
-  - Model: GPT 5.4
+| Game | Description | Model(s) | MCPs | Skills | Credit |
+|------|-------------|-------|------|--------|--------|
+| `voxel-rpg` | A voxel-based RPG with combat, inventory, and questing | GPT 5.4 | _TBD_ | _TBD_ | [leobrqz](https://github.com/leobrqz) |
 
 ## Setup
 
@@ -76,3 +97,4 @@ MIT - Do whatever you want with this code.
 
 Games created by AI - specific models listed in each game's section above.
 
+Contributors go here.

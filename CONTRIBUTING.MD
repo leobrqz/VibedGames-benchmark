@@ -21,6 +21,7 @@ This repository is a satire project: games are intentionally "vibe coded" and no
 - All game code must be fully AI-generated.
 - Human-written code is not allowed for game implementation.
 - Every game contribution must include prompt artifacts documenting how it was generated.
+- Every game contribution must document which MCPs and Skills were used during generation/refinement.
 - Keep the repository tone aligned with the satirical benchmark concept.
 - Be respectful and constructive in issues and pull requests.
 
@@ -73,6 +74,8 @@ Your PR description should include:
 - Why the change was made.
 - Which game folder is affected.
 - Model(s) used (example: GPT 5.4).
+- MCP(s) used.
+- Skill(s) used.
 - Any known limitations.
 
 Checklist:
@@ -80,7 +83,10 @@ Checklist:
 - [ ] Changes follow project rules.
 - [ ] Game runs locally with the documented command.
 - [ ] `README.md` is updated if needed.
+- [ ] `README.md` credits include your GitHub profile for new game contributions.
+- [ ] `README.md` preview section is updated with at least one image or GIF for your game.
 - [ ] Prompt files are included and complete.
+- [ ] Preview assets are included under the game's `preview/` folder.
 - [ ] No unrelated files were changed.
 
 ## Game Folder Requirements
@@ -91,9 +97,11 @@ Each game must live in its own folder and include:
 	The initial prompt used to generate the game.
 - `prompt_history.md`  
 	Iterative prompt history showing how the result evolved, for changes to existing games or new games with multiple iterations.
+- A `Generation Metadata` section in prompt artifacts listing the MCP(s) and Skill(s) used (example: `MCPs used: ...`, `Skills used: ...`).
 - `vite.config.js`  
 	Game-specific Vite config.
 - `index.html` and source files under `src/`.
+- `preview/` folder with images and/or GIFs showcasing gameplay.
 
 Also update root `package.json` scripts for the new game:
 
@@ -103,8 +111,10 @@ Also update root `package.json` scripts for the new game:
 
 And add the game entry to `README.md` with:
 
-- Game name and short description.
+- Game name and short description in the Games table.
 - Model(s) used.
+- Your GitHub profile in the credits section.
+- A preview section entry with at least one image or GIF from the `preview/` folder.
 
 ## Style Guidelines
 
