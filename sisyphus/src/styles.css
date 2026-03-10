@@ -1,0 +1,298 @@
+/* ── Sisyphus — Game Styles ── */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1a1612;
+  font-family: 'Inter', sans-serif;
+  color: #d4c8b8;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#ui-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Intro Screen ── */
+
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0d0a08;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  cursor: pointer;
+  pointer-events: all;
+  transition: opacity 0.8s ease;
+}
+
+#intro-screen.fade-out {
+  opacity: 0;
+}
+
+.intro-content {
+  text-align: center;
+  animation: introFadeIn 2s ease forwards;
+}
+
+.intro-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: 0.6em;
+  margin-bottom: 2rem;
+  color: #c4b09a;
+  text-indent: 0.6em;
+}
+
+.intro-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #8a7d70;
+  margin-bottom: 0.4rem;
+}
+
+.intro-author {
+  font-size: 0.85rem;
+  color: #6a5d52;
+  margin-bottom: 3rem;
+}
+
+.intro-prompt {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6a5d52;
+  animation: promptPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes introFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── HUD ── */
+
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  font-family: 'Inter', sans-serif;
+  animation: hudFadeIn 1s ease forwards;
+}
+
+@keyframes hudFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Stamina Bar ── */
+
+.stamina-container {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+}
+
+.stamina-container.exhausted .stamina-track {
+  animation: exhaustedPulse 0.6s ease-in-out infinite;
+}
+
+.stamina-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #8a7d70;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.stamina-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(30, 25, 20, 0.7);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(100, 90, 75, 0.3);
+}
+
+.stamina-fill {
+  height: 100%;
+  width: 100%;
+  background: rgb(80, 200, 60);
+  border-radius: 2px;
+  transition: width 0.1s linear, background-color 0.3s;
+  position: relative;
+  z-index: 2;
+}
+
+.stamina-glow {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: calc(100% + 4px);
+  width: 100%;
+  border-radius: 4px;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+@keyframes exhaustedPulse {
+  0%, 100% { border-color: rgba(200, 50, 30, 0.3); }
+  50% { border-color: rgba(200, 50, 30, 0.8); }
+}
+
+/* ── Height Counter ── */
+
+.height-counter {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-family: 'Cormorant Garamond', serif;
+  text-align: right;
+}
+
+.height-value {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: rgba(200, 190, 175, 0.8);
+  letter-spacing: 0.05em;
+}
+
+.height-unit {
+  font-size: 0.9rem;
+  color: rgba(140, 130, 115, 0.7);
+  margin-left: 3px;
+  vertical-align: super;
+  font-size: 0.8rem;
+}
+
+/* ── Grab Indicator ── */
+
+.grab-indicator {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: rgba(200, 190, 175, 0.7);
+  text-align: center;
+  animation: grabFadeIn 0.3s ease;
+}
+
+.grab-indicator .key {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-right: 6px;
+  border: 1px solid rgba(200, 190, 175, 0.3);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(200, 190, 175, 0.9);
+  background: rgba(40, 35, 28, 0.5);
+}
+
+@keyframes grabFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(5px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Reset Message ── */
+
+.reset-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: rgba(180, 165, 145, 0);
+  text-align: center;
+  transition: color 0.6s ease;
+  pointer-events: none;
+}
+
+.reset-message.visible {
+  color: rgba(180, 165, 145, 0.85);
+}
+
+/* ── Controls Hint ── */
+
+.controls-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+  font-size: 0.6rem;
+  color: rgba(140, 130, 115, 0.5);
+  letter-spacing: 0.1em;
+  opacity: 1;
+  transition: opacity 2s ease;
+  white-space: nowrap;
+}
+
+.controls-hint span {
+  display: inline-block;
+  padding: 1px 5px;
+  margin-right: 3px;
+  border: 1px solid rgba(140, 130, 115, 0.25);
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+/* ── Vignette (created via JS) ── */
+
+#vignette-overlay {
+  pointer-events: none;
+}

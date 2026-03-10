@@ -9,7 +9,10 @@
     "build:all": "bash scripts/build-all.sh",
     "dev:voxel-rpg": "vite voxel-rpg",
     "build:voxel-rpg": "vite build voxel-rpg",
-    "preview:voxel-rpg": "vite preview voxel-rpg"
+    "preview:voxel-rpg": "vite preview voxel-rpg",
+    "dev:sisyphus": "vite sisyphus",
+    "build:sisyphus": "vite build sisyphus",
+    "preview:sisyphus": "vite preview sisyphus"
   },
   "dependencies": {
     "three": "^0.180.0"

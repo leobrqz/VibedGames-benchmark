@@ -46,6 +46,19 @@ The purpose is to:
       </tr>
     </table>
   </details>
+  <details open>
+    <summary><b>sisyphus</b></summary>
+    <br>
+    <table>
+      <tr>
+        <td colspan="3" align="center"><img src="./sisyphus/preview/preview_01.png" width="600" alt="gameplay"></td>
+      </tr>
+      <tr>
+        <td><img src="./sisyphus/preview/preview_02.png" width="280" alt="screenshot 1"></td>
+        <td><img src="./sisyphus/preview/preview_03.png" width="280" alt="screenshot 2"></td>
+      </tr>
+    </table>
+  </details>
 </div>
 </div>
 
@@ -53,9 +66,33 @@ The purpose is to:
 
 Each game is in its own folder with independent configuration:
 
-| Game | Description | Model(s) | MCPs | Skills | Credit |
-|------|-------------|-------|------|--------|--------|
-| `voxel-rpg` | A voxel-based RPG with combat, inventory, and questing | GPT 5.4 | _TBD_ | _TBD_ | [leobrqz](https://github.com/leobrqz) |
+<table>
+  <thead>
+    <tr>
+      <th>Game</th>
+      <th>Description</th>
+      <th>Model(s)</th>
+      <th>MCPs</th>
+      <th>Skills</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>voxel-rpg</code></td>
+      <td>A voxel-based RPG with combat, inventory, and questing</td>
+      <td>GPT 5.4</td>
+      <td><em>TBD</em></td>
+      <td><em>TBD</em></td>
+    </tr>
+    <tr>
+      <td><code>sisyphus</code></td>
+      <td>A Sisyphus boulder-pushing game with procedural terrain and physics</td>
+      <td>Claude Opus 4.6</td>
+      <td><em>TBD</em></td>
+      <td><em>TBD</em></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Contributing
 
@@ -85,6 +122,9 @@ Each game has its own dev, build, and preview scripts:
 ```bash
 # Run voxel-rpg
 npm run dev:voxel-rpg
+
+# Run sisyphus
+npm run dev:sisyphus
 
 # Future games will follow the pattern:
 # npm run dev:game-name
