@@ -9,12 +9,4 @@ function updateStamina() {
   document.getElementById('stamina-bar').style.width = `${stamina}%`;
 }
 
-// Trigger on attack
-function attack() {
-  if (stamina >= 20) {
-    stamina -= 20;
-    // Proceed with combat logic...
-  }
-}
-
 setInterval(updateStamina, 100);
